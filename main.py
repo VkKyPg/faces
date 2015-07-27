@@ -42,11 +42,16 @@ class loadCategoryPage(webapp2.RequestHandler):
         id_people = self.response.get()
         instagram2.append()
 
-class MainHandler(webapp2.RequestHandler):
+class LoginHandler(webapp2.RequestHandler):
     def get(self):
+<<<<<<< HEAD
         template = jinja2_environment.get_template("templates/index.html")
         self.response.write(template.render())
         user = users.get_current_user()
+=======
+        template = jinja2_environment.get_template("templates/login.html")
+        user= users.get_current_user()
+>>>>>>> 1cdbf74197b3a238a99bf878839371999cb07a95
         if user:
             greeting = ('Welcome, %s! (<a href=%s>sign_out</a>)' %
                 (user.nickname(), users.create_logout_url('/')))
@@ -55,6 +60,7 @@ class MainHandler(webapp2.RequestHandler):
                 users.create_login_url('/'))
         self.response.write('<html><body>%s</body></html>' % greeting)
 
+<<<<<<< HEAD
 class CreateUser(webapp2.RequestHandler):
     def get(self):
         template= jinja2_environment.get_template("/templates/user.html")
@@ -65,6 +71,16 @@ class AddUserHandler(webapp2.RequestHandler):
         name= self.request.get('name')
         user= User(name=name)
         user.put()
+=======
+class MainHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja2_environment.get_template("templates/index.html")
+        self.response.write(template.render())
+
+class Category(ndb.Model):
+    categoryName = ndb.StringProperty(required=True)
+    id_list_of_people = ndb.IntegerProperty(repeated=True)
+>>>>>>> 1cdbf74197b3a238a99bf878839371999cb07a95
 
 class CreateCategoryHandler(webapp2.RequestHandler):
     def get(self):
@@ -89,7 +105,10 @@ class AddPersonHandler(webapp2.RequestHandler):
             name=self.request.get('name')
             person = Person(name=name)
             person.put()
-            self.response.write('Person was created')
+            self.response.write(person.name + ' was created')
+            self.response.write('<a href = /create_person> Create another Person </a>')
+            self.response.write('<a href = /> Back to Homepage </a>')
+            self.response.write('<a href = /category> Back to Category </a>')
 
 
 jinja2_environment = jinja2.Environment(loader=
@@ -102,4 +121,5 @@ app = webapp2.WSGIApplication([
     ('/create_person', CreatePersonHandler),
     ('/add_person', AddPersonHandler),
     ('/category', CreateCategoryHandler),
+    ('/login', LoginHandler),
 ], debug=True)
