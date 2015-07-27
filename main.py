@@ -23,7 +23,6 @@ import os
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write('Hello world!')
 
 class Person(ndb.Model):
     name_person = ndb.StringProperty(required= True)
@@ -31,9 +30,17 @@ class Person(ndb.Model):
     paragraph = ndb.TextProperty(required = False)
 
 class CreatePersonHandler(webapp2.RequestHandler):
-    
+    def get(self):
+        template = jinja2_environment.get_template('/templates/category.html')
+        self.response.write(template.render())
 
-
+class AddPersonHandler(webapp2.RequestHandler):
+    def post(self):
+        name_person = self.request.get('name_person')
+        image = self.request.get('image')
+        paragraph = self.request.get('paragraph')
+        person = Person(name_person = name_person, image = image, paragraph = paragraph)
+        person.put()
 
 jinja2_environment = jinja2.Environment(loader=
     jinja2.FileSystemLoader(os.path.dirname(__file__)))
