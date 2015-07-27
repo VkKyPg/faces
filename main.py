@@ -43,8 +43,8 @@ class AddCategoryHandler(webapp2.RequestHandler):
         self.response("Category was created")
 
 class Person(ndb.Model):
-    name_person = ndb.StringProperty(required= True)
-    image = ndb.BlobProperty(required = True)
+    name = ndb.StringProperty(required= True)
+    image = ndb.BlobProperty(required = False)
     paragraph = ndb.TextProperty(required = False)
 
 class CreatePersonHandler(webapp2.RequestHandler):
@@ -54,7 +54,7 @@ class CreatePersonHandler(webapp2.RequestHandler):
 
 class AddPersonHandler(webapp2.RequestHandler):
         def post(self):
-            name=self.request.get('name_person')
+            name=self.request.get('name')
             person = Person(name=name)
             person.put()
             self.response.write('Person was created')
@@ -68,4 +68,5 @@ app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/create_person', CreatePersonHandler),
     ('/add_person', AddPersonHandler),
+    ('/category', CreateCategoryHandler),
 ], debug=True)
