@@ -27,13 +27,37 @@ class MainHandler(webapp2.RequestHandler):
         self.response.write(template.render())
 
 class Category(ndb.Model):
-    name = ndb.StringProperty(required=True)
+    categoryName = ndb.StringProperty(required=True)
     id_list_of_people = ndb.IntegerProperty(repeated=True)
+
+class CreateCategoryHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja2_environment.get_template('/templates/category.html')
+        self.response.write(template.render())
+
+class AddCategoryHandler(webapp2.RequestHandler):
+    def post(self):
+        name = self.request.get('categoryName')
+        category = Category(name=name)
+        category.put()
+        self.response("Category was created")
 
 class Person(ndb.Model):
     name_person = ndb.StringProperty(required= True)
     image = ndb.BlobProperty(required = True)
     paragraph = ndb.TextProperty(required = False)
+
+class CreatePersonHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja2_environment.get_template('/templates/category.html')
+        self.response.write(template.render())
+
+class AddPersonHandler(webapp2.RequestHandler):
+        def post(self):
+            name=self.request.get('name_person')
+            person = Person(name=name)
+            person.put()
+            self.response.write('Person was created')
 
 
 jinja2_environment = jinja2.Environment(loader=
