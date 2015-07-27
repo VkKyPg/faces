@@ -25,11 +25,22 @@ class MainHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write('Hello world!')
 
+class Person(ndb.Model):
+    name_person = ndb.StringProperty(required= True)
+    image = nbd.BlobProperty(required = False)
+    paragraph = ndb.TextProperty(required = False)
+
+class CreatePersonHandler(webapp2.RequestHandler):
+    
+
+
 
 jinja2_environment = jinja2.Environment(loader=
     jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
+    ('/', MainHandler),
+    ('/create_person', CreatePersonHandler),
+    ('/add_person', AddPersonHandler),
 ], debug=True)
