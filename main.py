@@ -16,6 +16,7 @@
 #
 
 from google.appengine.ext import ndb
+from google.appengine.api import users
 import webapp2
 import jinja2
 import os
@@ -25,6 +26,14 @@ class MainHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja2_environment.get_template("templates/index.html")
         self.response.write(template.render())
+        user= users.get_current_user()
+        if user:
+            greeting = ('Welcome, %s! (<a href=%s>sign_out</a>)' %
+                (user.nickname(), users.create_logout_url('/')))
+        else:
+            greeting= ('<a href="%s">Sign in or register</a>.' %
+                users.create_login_url('/'))
+        self.response.write('<html><body>%s</body></html>' % greeting)
 
 class Category(ndb.Model):
     categoryName = ndb.StringProperty(required=True)
@@ -59,13 +68,28 @@ class AddPersonHandler(webapp2.RequestHandler):
             person.put()
             self.response.write('Person was created')
 
+class User(ndb.Model):
+    name = ndb.StringProperty(required=True)
+    id_list_of_categories= ndb.StringProperty(repeated=True)
+
+class CreateUser(webapp2.RequestHandler):
+    def get(self):
+        template= jinja2_environment.get_template("/templates/user.html")
+        self.response.write(template.render())
+
+class AddUserHandler(webapp2.RequestHandler):
+    def post(self):
+        name= self.request.get('name')
+        user= User(name=name)
+        user.put()
 
 jinja2_environment = jinja2.Environment(loader=
     jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
-
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
+    ('/create_user', CreateUser),
+    ('/add_user', AddUserHandler),
     ('/create_person', CreatePersonHandler),
     ('/add_person', AddPersonHandler),
     ('/category', CreateCategoryHandler),
