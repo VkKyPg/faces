@@ -66,4 +66,6 @@ jinja2_environment = jinja2.Environment(loader=
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
+    ('/create_person', CreatePersonHandler),
+    ('/add_person', AddPersonHandler),
 ], debug=True)
