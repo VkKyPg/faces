@@ -24,10 +24,15 @@ import os
 class MainHandler(webapp2.RequestHandler):
     def get(self):
 
+class Category(ndb.Model):
+    name = ndb.StringProperty(required=True)
+    id_list_of_people = ndb.IntegerProperty(repeated=True)
+
 class Person(ndb.Model):
     name_person = ndb.StringProperty(required= True)
-    image = nbd.BlobProperty(required = False)
+    image = ndb.BlobProperty(required = True)
     paragraph = ndb.TextProperty(required = False)
+
 
 class CreatePersonHandler(webapp2.RequestHandler):
     def get(self):
@@ -42,12 +47,11 @@ class AddPersonHandler(webapp2.RequestHandler):
         person = Person(name_person = name_person, image = image, paragraph = paragraph)
         person.put()
 
+
 jinja2_environment = jinja2.Environment(loader=
     jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/create_person', CreatePersonHandler),
-    ('/add_person', AddPersonHandler),
 ], debug=True)
