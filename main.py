@@ -33,6 +33,29 @@ class MainHandler(webapp2.RequestHandler):
                 users.create_login_url('/'))
         self.response.write('<html><body>%s</body></html>' % greeting)
 
+class Category(ndb.Model):
+    name = ndb.StringProperty(required=True)
+    id_list_of_people = ndb.IntegerProperty(repeated=True)
+
+class Person(ndb.Model):
+    name_person = ndb.StringProperty(required= True)
+    image = ndb.BlobProperty(required = True)
+    paragraph = ndb.TextProperty(required = False)
+
+
+class CreatePersonHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja2_environment.get_template('/templates/category.html')
+        self.response.write(template.render())
+
+class AddPersonHandler(webapp2.RequestHandler):
+    def post(self):
+        name_person = self.request.get('name_person')
+        image = self.request.get('image')
+        paragraph = self.request.get('paragraph')
+        person = Person(name_person = name_person, image = image, paragraph = paragraph)
+        person.put()
+
 class User(ndb.Model):
     name = ndb.StringProperty(required=True)
     id_list_of_categories= ndb.StringProperty(repeated=True)
@@ -55,4 +78,6 @@ app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/create_user', CreateUser),
     ('/add_user', AddUserHandler),
+    ('/create_person', CreatePersonHandler),
+    ('/add_person', AddPersonHandler),
 ], debug=True)
