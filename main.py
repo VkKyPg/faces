@@ -22,10 +22,9 @@ import jinja2
 import os
 
 
-class MainHandler(webapp2.RequestHandler):
+class LoginHandler(webapp2.RequestHandler):
     def get(self):
-        template = jinja2_environment.get_template("templates/index.html")
-        self.response.write(template.render())
+        template = jinja2_environment.get_template("templates/login.html")
         user= users.get_current_user()
         if user:
             greeting = ('Welcome, %s! (<a href=%s>sign_out</a>)' %
@@ -34,6 +33,11 @@ class MainHandler(webapp2.RequestHandler):
             greeting= ('<a href="%s">Sign in or register</a>.' %
                 users.create_login_url('/'))
         self.response.write('<html><body>%s</body></html>' % greeting)
+
+class MainHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja2_environment.get_template("templates/index.html")
+        self.response.write(template.render())
 
 class Category(ndb.Model):
     categoryName = ndb.StringProperty(required=True)
@@ -66,7 +70,10 @@ class AddPersonHandler(webapp2.RequestHandler):
             name=self.request.get('name')
             person = Person(name=name)
             person.put()
-            self.response.write('Person was created')
+            self.response.write(person.name + ' was created')
+            self.response.write('<a href = /create_person> Create another Person </a>')
+            self.response.write('<a href = /> Back to Homepage </a>')
+            self.response.write('<a href = /category> Back to Category </a>')
 
 class User(ndb.Model):
     name = ndb.StringProperty(required=True)
@@ -93,4 +100,5 @@ app = webapp2.WSGIApplication([
     ('/create_person', CreatePersonHandler),
     ('/add_person', AddPersonHandler),
     ('/category', CreateCategoryHandler),
+    ('/login', LoginHandler),
 ], debug=True)
