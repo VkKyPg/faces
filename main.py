@@ -23,7 +23,8 @@ import os
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write('Hello world!')
+        template = jinja2_environment.get_template("templates/index.html")
+        self.response.write(template.render())
 
 class Category(ndb.Model):
     name = ndb.StringProperty(required=True)
