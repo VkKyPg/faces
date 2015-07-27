@@ -15,7 +15,6 @@
 # limitations under the License.
 #
 
-from google.appengine.ext import users
 from google.appengine.ext import ndb
 import webapp2
 import jinja2
@@ -26,9 +25,14 @@ class MainHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write('Hello world!')
 
-class Category(ndb.Model)
+class Category(ndb.Model):
     name = ndb.StringProperty(required=True)
     id_list_of_people = ndb.IntegerProperty(repeated=True)
+
+class Person(ndb.Model):
+    name_person = ndb.StringProperty(required= True)
+    image = ndb.BlobProperty(required = True)
+    paragraph = ndb.TextProperty(required = False)
 
 
 jinja2_environment = jinja2.Environment(loader=
@@ -36,5 +40,5 @@ jinja2_environment = jinja2.Environment(loader=
 
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
+    ('/', MainHandler),
 ], debug=True)
