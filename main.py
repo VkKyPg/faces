@@ -45,7 +45,7 @@ class Category(ndb.Model):
 
 class CreateCategoryHandler(webapp2.RequestHandler):
     def get(self):
-        template = jinja2_environment.get_template('/templates/category.html')
+        template = jinja2_environment.get_template('/templates/index.html')
         self.response.write(template.render())
 
 class AddCategoryHandler(webapp2.RequestHandler):
@@ -53,7 +53,7 @@ class AddCategoryHandler(webapp2.RequestHandler):
         name = self.request.get('categoryName')
         category = Category(name=name)
         category.put()
-        self.response("Category was created")
+        self.response.write("Category was created")
 
 class Person(ndb.Model):
     name = ndb.StringProperty(required= True)
@@ -75,15 +75,6 @@ class AddPersonHandler(webapp2.RequestHandler):
             self.response.write('<a href = /> Back to Homepage </a>')
             self.response.write('<a href = /category> Back to Category </a>')
 
-class User(ndb.Model):
-    name = ndb.StringProperty(required=True)
-    id_list_of_categories= ndb.StringProperty(repeated=True)
-
-class CreateUser(webapp2.RequestHandler):
-    def get(self):
-        template= jinja2_environment.get_template("/templates/user.html")
-        self.response.write(template.render())
-
 class AddUserHandler(webapp2.RequestHandler):
     def post(self):
         name= self.request.get('name')
@@ -95,8 +86,6 @@ jinja2_environment = jinja2.Environment(loader=
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/create_user', CreateUser),
-    ('/add_user', AddUserHandler),
     ('/create_person', CreatePersonHandler),
     ('/add_person', AddPersonHandler),
     ('/category', CreateCategoryHandler),
