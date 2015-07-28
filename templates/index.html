@@ -11,12 +11,11 @@
 <body>
   <div class="topbar">
     <div id="gohome">Faces</div>
-    <div id="logout">logout</div>
   </div>
     <div id="addCategory"> Add New Category </div>
     <div id="categoryForm">
-        <form action="/category" method='GET'>
-          <div>Name your category <input type="text" name="categoryName"></div>
+        <form action='/add_category' method='POST'>
+          <div>Name your category <input type="text" name="category_Name"></div>
           <div class="exit">x</div>
         </form>
     </div>
