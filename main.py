@@ -21,11 +21,37 @@ import webapp2
 import jinja2
 import os
 
+class Person(ndb.Model):
+    name = ndb.StringProperty(required= True)
+    image = ndb.BlobProperty(required = False)
+    paragraph = ndb.TextProperty(required = False)
+
+class Category(ndb.Model):
+    categoryName = ndb.StringProperty(required=True)
+    people = ndb.StructuredProperty(Person, repeated= False)
+
+class User(ndb.Model):
+    name = ndb.StringProperty(required=True)
+    categories = ndb.StructuredProperty(Category, repeated= True)
+
+class loadCategoryPage(webapp2.RequestHandler):
+    def get(self):
+        query = Category
+        instagram2 = []
+        id_category = self.request.get()
+        id_people = self.response.get()
+        instagram2.append()
 
 class LoginHandler(webapp2.RequestHandler):
     def get(self):
+
+        template = jinja2_environment.get_template("templates/index.html")
+        self.response.write(template.render())
+        user = users.get_current_user()
+
         template = jinja2_environment.get_template("templates/login.html")
         user= users.get_current_user()
+
         if user:
             greeting = ('Welcome, %s! (<a href=%s>sign_out</a>)' %
                 (user.nickname(), users.create_logout_url('/')))
@@ -34,14 +60,21 @@ class LoginHandler(webapp2.RequestHandler):
                 users.create_login_url('/'))
         self.response.write('<html><body>%s</body></html>' % greeting)
 
+class CreateUser(webapp2.RequestHandler):
+    def get(self):
+        template= jinja2_environment.get_template("/templates/user.html")
+        self.response.write(template.render())
+
+class AddUserHandler(webapp2.RequestHandler):
+    def post(self):
+        name= self.request.get('name')
+        user= User(name=name)
+        user.put()
+
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja2_environment.get_template("templates/index.html")
         self.response.write(template.render())
-
-class Category(ndb.Model):
-    categoryName = ndb.StringProperty(required=True)
-    id_list_of_people = ndb.IntegerProperty(repeated=True)
 
 class CreateCategoryHandler(webapp2.RequestHandler):
     def get(self):
@@ -55,10 +88,6 @@ class AddCategoryHandler(webapp2.RequestHandler):
         category.put()
         self.response.write("Category was created")
 
-class Person(ndb.Model):
-    name = ndb.StringProperty(required= True)
-    image = ndb.BlobProperty(required = False)
-    paragraph = ndb.TextProperty(required = False)
 
 class CreatePersonHandler(webapp2.RequestHandler):
     def get(self):
