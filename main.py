@@ -60,11 +60,6 @@ class LoginHandler(webapp2.RequestHandler):
                 users.create_login_url('/'))
         self.response.write('<html><body>%s</body></html>' % greeting)
 
-class CreateUser(webapp2.RequestHandler):
-    def get(self):
-        template= jinja2_environment.get_template("/templates/user.html")
-        self.response.write(template.render())
-
 class AddUserHandler(webapp2.RequestHandler):
     def post(self):
         name= self.request.get('name')
@@ -78,7 +73,7 @@ class MainHandler(webapp2.RequestHandler):
 
 class CreateCategoryHandler(webapp2.RequestHandler):
     def get(self):
-        template = jinja2_environment.get_template('/templates/category.html')
+        template = jinja2_environment.get_template('templates/category.html')
         self.response.write(template.render())
 
 class AddCategoryHandler(webapp2.RequestHandler):
@@ -114,9 +109,7 @@ jinja2_environment = jinja2.Environment(loader=
     jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler),
-    ('/create_person', CreatePersonHandler),
-    ('/add_person', AddPersonHandler),
+    ('/home', MainHandler),
     ('/category', CreateCategoryHandler),
-    ('/login', LoginHandler),
+    ('/', LoginHandler),
 ], debug=True)
