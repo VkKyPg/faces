@@ -14,6 +14,11 @@ $(document).ready(function() {
 
   $("#exit").click(function() {
     $("#categoryForm").slideToggle();
+    $("#personForm").slideToggle();
   });
+
+  $("#addPerson").click(function() {
+    $("#personForm").slideToggle();
+  })
 
 });

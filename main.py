@@ -78,7 +78,7 @@ class MainHandler(webapp2.RequestHandler):
 
 class CreateCategoryHandler(webapp2.RequestHandler):
     def get(self):
-        template = jinja2_environment.get_template('/templates/index.html')
+        template = jinja2_environment.get_template('/templates/category.html')
         self.response.write(template.render())
 
 class AddCategoryHandler(webapp2.RequestHandler):

@@ -1,14 +1,31 @@
+<!DOCTYPE html>
+<html>
 <head>
+  <title> [category name] </title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
   <script src="../javascript/script.js"></script>
 </head>
 <body>
-  <h1> Add New Person </h1>
-  <form action = '/add_person' method = POST  enctype="multipart/form-data">
-    <div> Name <input type = 'text' name = 'name'> </div>
-    <div> Image <input type = 'file' name = 'image'> </div>
-    <div> Paragraph <input type = 'text' name = 'paragraph'> </div>
-    <div> <input type = 'submit' value = "add a new person">
-  </form>
+  <div class="topbar">
+    <div id="gohome">Faces</div>
+  </div>
+  <ul>
+    <li id="addPerson"><a>Add Person</a></li>
+  </ul>
+    <form action = '/category' method = "POST"  enctype="multipart/form-data">
+      <div id="personForm">
+        <div id="info">
+          <h2> Add New Person </h2>
+          <div> Name <input type = 'text' name = 'name' class="textbox"> </div>
+          <div> Image <input type = 'file' name = 'image'> </div>
+          <div> Paragraph <input type = 'text' name = 'paragraph' class="textbox"> </div>
+          <div id="buttons">
+            <div class="button">Create</div>
+            <div class="button" id="exit">x</div>
+          </div>
+        </div>
+      </div>
+    </form>
 </body>
+</html>
