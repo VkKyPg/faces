@@ -12,14 +12,28 @@
   <div class="topbar">
     <div id="gohome">Faces</div>
   </div>
-    <div id="addCategory"> Add New Category </div>
+    <ul>
+      <li id="addCategory"><a>Add Category</a></li>
+      <li id="tutorial"><a href="../templates/html">Tutorial</a></li>
+    </ul>
     <div id="categoryForm">
+<<<<<<< HEAD
         <form action='/add_category' method='POST'>
           <div>Name your category <input type="text" name="category_Name"></div>
           <div class="exit">x</div>
+=======
+        <form action="/" method='GET'>
+          <div>
+            <h1>Name your category</h1>
+            <input type="text" name="categoryName" class="textbox">
+              <div id="buttons">
+                <div class="button">Create</div>
+                <div class="button" id="exit">x</div>
+              </div>
+          </div>
+>>>>>>> cec67c30caf4d761ad3bc44b123b0e4b95e23ce1
         </form>
     </div>
 </body>
-
 
 </html>

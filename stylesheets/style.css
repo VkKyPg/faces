@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #addCategory {
   width: 65px;
   height: 100%;
@@ -12,6 +13,43 @@
 
 #addCategory:hover {
   background-color: #00A0A6;
+=======
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+  width: 65px;
+  height: 100%;
+  padding: 19px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  color: white;
+  display: block;
+  float: right;
+  margin: 15px 45px;
+  border-radius: 20px;
+  background-color: #00A0A6;
+  transition: background 0.1s ease;
+  font-size: 16px;
+}
+
+#tutorial {
+  padding: 27px;
+  float: left;
+}
+
+li:hover {
+  background-color: #00C5CD;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+>>>>>>> cec67c30caf4d761ad3bc44b123b0e4b95e23ce1
 }
 
 body {
@@ -21,12 +59,17 @@ body {
   background-image: url("../resources/background_texture.jpg");
 }
 
+<<<<<<< HEAD
 #categoryForm {
+=======
+#categoryForm, #personForm {
+>>>>>>> cec67c30caf4d761ad3bc44b123b0e4b95e23ce1
   display: none;
   text-align: center;
   width: 60%;
   margin: auto;
   background-color: white;
+<<<<<<< HEAD
   position: static;
   margin-top: 100px;
   padding: 100px;
@@ -34,10 +77,28 @@ body {
 }
 
 .exit {
+=======
+  position: relative;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  padding: 60px;
+  border-radius: 20px;
+  font-size: 20px;
+}
+
+
+#buttons {
+  display: block;
+  margin: 50px;
+}
+
+.button {
+>>>>>>> cec67c30caf4d761ad3bc44b123b0e4b95e23ce1
   border-radius: 15px;
   width: 100px;
   height: 50px;
   text-align: center;
+<<<<<<< HEAD
   background-color: #454857;
   margin: 15px;
   color: white;
@@ -47,14 +108,68 @@ body {
 
 .exit:hover {
   background-color: #00A0A6;
+=======
+  background-color:#333333;
+  margin: 15px;
+  color: white;
+  cursor: pointer;
+  display: inline;
+  padding: 20px;
+}
+
+.button:hover {
+  background-color: #00C5CD;
+>>>>>>> cec67c30caf4d761ad3bc44b123b0e4b95e23ce1
 }
 
 .topbar {
   width: 100%;
   height: 70px;
+<<<<<<< HEAD
   background-color: #4F57AA;
   float: right;
   position: fixed;
+=======
+  background-color: #333333;
+  position: relative;
+}
+
+#gohome {
+  font-size: 50px;
+  color: white;
+  padding: 10px;
+  margin-left: 50px;
+  cursor: pointer;
+  width: 120px;
+}
+
+.textbox {
+  height: 30px;
+  font-size: 16px;
+  margin: 10px;
+}
+
+
+h1 {
+    text-align: center;
+    text-decoration: underline;
+}
+
+.Box {
+    border: 1px solid black;
+    margin: auto;
+    height: auto;
+    width: 43px;
+    float: left;
+    height: 210px;
+    width: 210px;
+    text-align: center;
+}
+
+#restofpage {
+  position: absolute;
+  border: 2px solid black;
+>>>>>>> cec67c30caf4d761ad3bc44b123b0e4b95e23ce1
 }
 
 #gohome {

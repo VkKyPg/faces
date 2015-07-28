@@ -31,7 +31,6 @@ class Category(ndb.Model):
     category_Name = ndb.StringProperty(required=True)
     people = ndb.StructuredProperty(Person, repeated = True)
 
-
 class User(ndb.Model):
     name = ndb.StringProperty(required=True)
     # categories = ndb.LocalStructuredProperty(Category, repeated = True)
@@ -44,23 +43,27 @@ class LoginHandler(webapp2.RequestHandler):
             template= jinja2_environment.get_template("/templates/user.html")
             self.response.write(template.render())
         else:
-            greeting = ('<a href= "%s"> Sign in or register</a>.' % users.create_login_url('/'))
-            self.response.write('<html><body>%s</body></html>' % greeting)
+            greeting = ('<a href= "%s"> Sign in or register</a>.' %
+                users.create_login_url('/'))
+        self.response.write('<html><body>%s</body></html>'%greeting)
 
 class AddUserHandler(webapp2.RequestHandler):
     def post(self):
         name= self.request.get('name')
         user = User(name=name)
         user.put()
+        template = jinja2_environment.get_template("templates/index.html")
+        self.response.write(template.render())
+
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        template = jinja2_environment.get_template("/templates/index.html")
+        template = jinja2_environment.get_template("templates/index.html")
         self.response.write(template.render())
 
 class CreateCategoryHandler(webapp2.RequestHandler):
     def get(self):
-        template = jinja2_environment.get_template('/templates/index.html')
+        template = jinja2_environment.get_template('templates/category.html')
         self.response.write(template.render())
 
 class AddCategoryHandler(webapp2.RequestHandler):
@@ -69,7 +72,7 @@ class AddCategoryHandler(webapp2.RequestHandler):
         category = Category(category_Name = category_Name)
         category.put()
         template_vars = {'category': category}
-        template = jinja2_environment.get_template('category.html')
+        template = jinja2_environment.get_template('templates/category.html')
         self.response.write(template.render(template_vars))
 
 class CreatePersonHandler(webapp2.RequestHandler):
@@ -79,7 +82,6 @@ class CreatePersonHandler(webapp2.RequestHandler):
 
 class AddPersonHandler(webapp2.RequestHandler):
     def post(self):
-        user = users.get_current_user()
         name_person = self.request.get('name_person')
         image = str(self.request.get('image'))
         paragraph = self.request.get('paragraph')
@@ -93,15 +95,17 @@ class AddPersonHandler(webapp2.RequestHandler):
         self.response.write('<a href = /> Back to Homepage </a>')
         self.response.write('<a href = /category> Back to Category </a>')
 
+class AddUserHandler(webapp2.RequestHandler):
+    def post(self):
+        name= self.request.get('name')
+        user= User(name=name)
+        user.put()
+
 jinja2_environment = jinja2.Environment(loader=
     jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
 app = webapp2.WSGIApplication([
-    ('/', LoginHandler),
-    ('/add_user', AddUserHandler),
+    ('/home', MainHandler),
     ('/category', CreateCategoryHandler),
-    ('/add_category', AddCategoryHandler ),
-    ('/create_person', CreatePersonHandler),
-    ('/add_person', AddPersonHandler),
-
+    ('/', LoginHandler),
 ], debug=True)
