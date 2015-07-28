@@ -28,7 +28,7 @@ class Person(ndb.Model):
 
 class Category(ndb.Model):
     categoryName = ndb.StringProperty(required=True)
-    people = ndb.StructuredProperty(Person, repeated= False)
+    people = ndb.StructuredProperty(Person, repeated)
 
 class User(ndb.Model):
     name = ndb.StringProperty(required=True)

@@ -12,7 +12,7 @@ $(document).ready(function() {
     $("#underline").css({});
   });
 
-  $(".exit").click(function() {
+  $("#exit").click(function() {
     $("#categoryForm").slideToggle();
   });
 

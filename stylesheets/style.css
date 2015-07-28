@@ -1,17 +1,38 @@
-#addCategory {
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
   width: 65px;
   height: 100%;
-  margin-right: 20vh;
   padding: 19px;
   text-align: center;
-  margin-left: 85%;
   cursor: pointer;
   position: relative;
   color: white;
+  display: block;
+  float: right;
+  margin: 15px 45px;
+  border-radius: 20px;
+  background-color: #00A0A6;
+  transition: background 0.1s ease;
+  font-size: 16px;
 }
 
-#addCategory:hover {
-  background-color: #00A0A6;
+#tutorial {
+  padding: 27px;
+  float: left;
+}
+
+li:hover {
+  background-color: #00C5CD;
+}
+
+a {
+  text-decoration: none;
+  color: white;
 }
 
 body {
@@ -29,11 +50,18 @@ body {
   background-color: white;
   position: static;
   margin-top: 100px;
-  padding: 100px;
+  padding: 60px;
+  border-radius: 20px;
+  font-size: 20px;
 
 }
 
-.exit {
+#buttons {
+  display: block;
+  margin-top: 50px;
+}
+
+.button {
   border-radius: 15px;
   width: 100px;
   height: 50px;
@@ -41,8 +69,9 @@ body {
   background-color: #454857;
   margin: 15px;
   color: white;
-  font-size: 40px;
   cursor: pointer;
+  display: inline;
+  padding: 20px;
 }
 
 .exit:hover {
@@ -52,9 +81,8 @@ body {
 .topbar {
   width: 100%;
   height: 70px;
-  background-color: #4F57AA;
-  float: right;
-  position: fixed;
+  background-color: #333333;
+  position: relative;
 }
 
 #gohome {
@@ -64,4 +92,9 @@ body {
   margin-left: 50px;
   cursor: pointer;
   width: 120px;
+}
+
+#cattext {
+  height: 30px;
+  font-size: 16px;
 }
