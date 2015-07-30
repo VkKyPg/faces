@@ -6,7 +6,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
   <script src="../javascript/script.js"></script>
-  <!-- <link href='http://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'> -->
   <link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
 </head>
 
@@ -28,8 +27,11 @@
             <input type="text" name="category_Name" class="textbox">
 
               <div id="buttons">
-                <div class="button" id="createbutton"><input class = "button" type = "submit" value = "create" id="buttonbutton"></div>
-                <div class="button" id="exit">x</div>
+                  <div class="button" id="createbutton">
+                    <input class = "button" type = "submit" value = "create" id="buttonbutton">
+                  </div>
+                  <div class="button" id="exit">x</div>
+
               </div>
           </div>
         </form>
@@ -41,12 +43,20 @@
     {% for category in categories %}
       {% if category.user_id == user_id %}
 
-          <a href= "/add_person?category_id={{category.key.id()}}">
-            <li class="listedCategories">{{category.category_Name}} </li>
+          <a href= "/add_person?category_id={{category_keys[loop.index0]}}">
+            <li class="listedCategories">
+            {{category.category_Name}}
+            <form action = "/delete_category" method = "POST">
+              <input type="hidden" name= 'keyid' value = "{{category_keys[loop.index0]}}">
+              <input type="submit" value="Delete" class="deletebutton">
+            </form>
+          </li>
           </a>
+
 
       {% endif %}
     {% endfor %}
+
   </ul>
 
 </div>

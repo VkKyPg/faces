@@ -15,10 +15,6 @@
     <!-- <div id="tutorial" class="navitem"><a href="../templates/html">Tutorial</a></div> -->
   </div>
 
-  <!-- <div id="idname">
-    {{category_id}}
-  </div> -->
-
   <div id="addPerson" class="add">Add Person </div>
 <div id="personForm">
     <form action = '/add_person' method = "POST"  enctype="multipart/form-data">
@@ -28,6 +24,7 @@
             <div> Name <input type = 'text' name = 'name_person' class="textbox"> </div>
             <div> Image URL <input type = 'text' name = 'image' class="textbox"> </div>
             <div> Paragraph <input type = 'text' name = 'paragraph' class="textbox"> </div>
+
           </div>
 
           <div id="buttons">
@@ -50,6 +47,11 @@
           <div class="personName">{{person.name_person}}</div>
           <img src="{{person.image}}" class="personurl"></img>
           <div class="personParagraph">{{person.paragraph}}</div>
+
+          <form action = "/delete_person" method = "POST">
+            <input type="hidden" name= 'ppl_id' value = "{{person.key.id()}}">
+            <input type="submit" value="Delete" class="deletebutton">
+          </form>
         </li>
         {% endif %}
       {% endfor %}

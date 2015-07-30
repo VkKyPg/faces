@@ -7,7 +7,7 @@ import logging
 
 class Person(ndb.Model):
     name_person = ndb.StringProperty(required= True)
-    image = ndb.StringProperty(required = False)
+    image = ndb.BlobProperty(required = False)
     paragraph = ndb.StringProperty(required = False)
     category_id = ndb.StringProperty(required = False)
 
@@ -32,42 +32,52 @@ class LoginHandler(webapp2.RequestHandler):
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        template = jinja2_environment.get_template("templates/index.html")
-        self.response.write(template.render())
+        user_id = users.get_current_user().user_id()
+        category_data = Category.query().fetch()
+        category_keys =[]
+        for category in category_data:
+            category_keys.append(category.key.id())
+        template_vars = {'user_id': user_id, 'categories': category_data, "category_keys": category_keys}
+        template = jinja2_environment.get_template('templates/index.html')
+        self.response.write(template.render(template_vars))
 
 class AddCategoryHandler(webapp2.RequestHandler):
     def post(self):
         category_Name = self.request.get('category_Name')
         user_id = users.get_current_user().user_id()
         category = Category(category_Name = category_Name, user_id = user_id)
-        category_data = Category.query().fetch()
         category.put()
-        category_data.append(category)
-        template_vars = {'user_id': user_id, 'categories': category_data}
-        template = jinja2_environment.get_template('templates/index.html')
-        self.response.write(template.render(template_vars))
+        self.redirect('/')
 
 class AddPersonHandler(webapp2.RequestHandler):
     def get(self):
         category_id = self.request.get('category_id')
-        temp_vars = {'category_id': category_id}
-        template = jinja2_environment.get_template('templates/category.html')
-        self.response.write(template.render(temp_vars))
-    def post(self):
-        name_person = self.request.get('name_person')
-        image = self.request.get('image')
-        paragraph = self.request.get('paragraph')
-        category_id = self.request.get('category_id')
-        if name_person.strip() == "":
-            name_person = "Anonymous"
-        person = Person(name_person = name_person, image = image, paragraph = paragraph, category_id = category_id )
         person_data = Person.query().fetch()
-        person.put()
-        person_data.append(person)
-        template_vars = {'category_id': category_id, 'people':person_data}
+        template_vars = {'category_id': category_id, 'people': person_data}
         template = jinja2_environment.get_template('templates/category.html')
         self.response.write(template.render(template_vars))
+    def post(self):
+        name_person = self.request.get('name_person')
+        image = str(self.request.get('image'))
+        paragraph = self.request.get('paragraph')
+        category_id = self.request.get('category_id')
+        person = Person(name_person = name_person, image = image, paragraph = paragraph, category_id = category_id )
+        person.put()
+        self.redirect('/add_person?category_id=' + category_id)
 
+class DeleteCategoryHandler(webapp2.RequestHandler):
+    def post(self):
+        id_category = self.request.get('keyid')
+        k = ndb.Key(Category, int(id_category))
+        k.delete()
+        self.redirect('/home')
+
+class DeletePersonHandler(webapp2.RequestHandler):
+    def post(self):
+        id_people = self.request.get('ppl_id')
+        k = ndb.Key(Person, int(id_people))
+        k.delete()
+        self.redirect('/add_person')
 
 jinja2_environment = jinja2.Environment(loader=
     jinja2.FileSystemLoader(os.path.dirname(__file__)))
@@ -77,4 +87,6 @@ app = webapp2.WSGIApplication([
     ('/home', MainHandler),
     ('/add_category', AddCategoryHandler),
     ('/add_person', AddPersonHandler),
+    ('/delete_category', DeleteCategoryHandler),
+    ('/delete_person', DeletePersonHandler),
 ], debug=True)

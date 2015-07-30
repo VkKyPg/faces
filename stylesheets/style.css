@@ -20,6 +20,7 @@ ul {
    font-size: 2em;
    font-family: 'Poiret One', cursive;
    padding-top: 20px;
+   padding-right: 30px;
 }
 
 .navitem, .add {
@@ -106,6 +107,7 @@ body {
   display: inline;
   padding: 20px;
   border: none;
+  margin-left: 10px;
 }
 
 .button:hover {
@@ -166,7 +168,7 @@ li, tile {
 .tile {
   display: inline-block;
   padding: 35px;
-  max-width: 250px;
+  max-width: 500px;
 
 }
 
@@ -184,6 +186,20 @@ li, tile {
     .restofpage {
         margin-top: 220px;
     }
+}
+
+@media only screen and (max-width: 500px) {
+
+      .tile {
+        width: 90%;
+        margin: auto;
+        margin-bottom: 10px;
+        right: 20px;
+      }
+      .personurl {
+        width: 90%;
+        margin: auto;
+      }
 }
 
 /*#idname {
@@ -206,7 +222,10 @@ li, tile {
 }
 
 .personurl {
-  width: 200px;
-  border: 1px solid black;
+  margin-top: 10px;
+  max-width: 500px;
+}
+
+.deletebutton {
   margin-top: 10px;
 }
