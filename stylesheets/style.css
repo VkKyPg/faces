@@ -188,7 +188,7 @@ li, tile {
     }
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 700px) {
 
       .tile {
         width: 90%;
