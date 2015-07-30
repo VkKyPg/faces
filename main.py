@@ -84,8 +84,11 @@ class DeletePersonHandler(webapp2.RequestHandler):
 
 class TutorialHandler(webapp2.RequestHandler):
     def get(self):
+        user_id = users.get_current_user().user_id()
+        user_logout= users.create_logout_url ('/')
+        template_vars = {'user_logout' : user_logout}
         template = jinja2_environment.get_template('templates/tutorial.html')
-        self.response.write(template.render())
+        self.response.write(template.render(template_vars))
 
 jinja2_environment = jinja2.Environment(loader=
     jinja2.FileSystemLoader(os.path.dirname(__file__)))
