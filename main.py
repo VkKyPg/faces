@@ -79,6 +79,11 @@ class DeletePersonHandler(webapp2.RequestHandler):
         k.delete()
         self.redirect('/add_person')
 
+class TutorialHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja2_environment.get_template('templates/tutorial.html')
+        self.response.write(template.render())
+
 jinja2_environment = jinja2.Environment(loader=
     jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
@@ -89,4 +94,5 @@ app = webapp2.WSGIApplication([
     ('/add_person', AddPersonHandler),
     ('/delete_category', DeleteCategoryHandler),
     ('/delete_person', DeletePersonHandler),
+    ('/about', TutorialHandler)
 ], debug=True)
