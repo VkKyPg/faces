@@ -30,18 +30,14 @@ class LoginHandler(webapp2.RequestHandler):
         else:
             self.redirect(users.create_login_url(self.request.uri))
 
-
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        user = users.get_current_user()
-        user_logout = users.create_logout_url ('/')
         user_id = users.get_current_user().user_id()
         category_data = Category.query().fetch()
         category_keys =[]
         for category in category_data:
             category_keys.append(category.key.id())
-        template_vars = {'user_id': user_id, 'categories': category_data,
-                        'category_keys': category_keys, 'user_logout' : user_logout }
+        template_vars = {'user_id': user_id, 'categories': category_data, "category_keys": category_keys}
         template = jinja2_environment.get_template('templates/index.html')
         self.response.write(template.render(template_vars))
 

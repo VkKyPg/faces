@@ -11,10 +11,11 @@
 
 <body>
   <div class="topbar">
-    <div id="gohome" class="navitem"><a href="/home">Faces<br/></a></div>
-    <div id="logout" class="navitem"><a>Log Out</a></div>
-        <li id="logout"><a href = "{{user_logout}}">Log Out</a></li>
-    </div>
+
+    <a href="/home"><div id="gohome" class="navitem">Faces</div></a>
+    <a><div id="logout" class="navitem">Log Out</div></a>
+    <a href="/about"><div id="tutorial" class="navitem">About</div></a>
+  </div>
 
 
     <div id="addCategory" class="add">Add Category </div>
@@ -24,11 +25,13 @@
           <div>
             <h2>Name your category</h2>
             <input type="text" name="category_Name" class="textbox">
+
+
               <div id="buttons">
-                <div class="button" id="createbutton">
-                  <input class = "button" type = "submit" value = "create" id="buttonbutton">
-                </div>
-              <div class="button" id="exit">x</div>
+                  <div class="button" id="createbutton">
+                    <input class = "button" type = "submit" value = "create" id="buttonbutton">
+                  </div>
+                  <div class="button" id="exit">x</div>
               </div>
           </div>
         </form>
@@ -44,16 +47,21 @@
           <a href= "/add_person?category_id={{category_keys[loop.index0]}}">
             <li class="listedCategories">
             {{category.category_Name}}
-              <form action = "/delete_category" method = "POST">
-                <input type="hidden" name= 'keyid' value = "{{category_keys[loop.index0]}}">
-                <input type="submit" value="Delete" class="deletebutton">
-              </form>
-            </li>
+
+            <form action = "/delete_category" method = "POST">
+              <input type="hidden" name= 'keyid' value = "{{category_keys[loop.index0]}}">
+              <input type="submit" value="Delete" class="deletebutton">
+            </form>
+          </li>
           </a>
-        
+
+
       {% endif %}
     {% endfor %}
+
   </ul>
+
+
 </div>
 </body>
 
