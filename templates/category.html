@@ -1,43 +1,60 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title> [category name] </title>
+  <title> {{category_id}} </title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
   <script src="../javascript/script.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
 </head>
+
 <body>
   <div class="topbar">
-    <div id="gohome">Faces</div>
+    <a href="/home"><div id="gohome" class="navitem">Faces</div></a>
+    <a><div id="logout" class="navitem">Log Out</div></a>
+    <!-- <div id="tutorial" class="navitem"><a href="../templates/html">Tutorial</a></div> -->
   </div>
-  <ul>
-    <li id="addPerson"><a>Add Person</a></li>
-  </ul>
-  <!--
-  HIDDEN FORM
-  -->
-    <form action = '/category' method = "POST"  enctype="multipart/form-data">
-      <div id="personForm">
-        <div id="info">
+
+  <!-- <div id="idname">
+    {{category_id}}
+  </div> -->
+
+  <div id="addPerson" class="add">Add Person </div>
+<div id="personForm">
+    <form action = '/add_person' method = "POST"  enctype="multipart/form-data">
+        <div>
           <h2> Add New Person </h2>
-          <div> Name <input type = 'text' name = 'name' class="textbox"> </div>
-          <div> Image <input type = 'file' name = 'image'> </div>
-          <div> Paragraph <input type = 'text' name = 'paragraph' class="textbox"> </div>
+
+            <div> Name <input type = 'text' name = 'name_person' class="textbox"> </div>
+            <div> Image URL <input type = 'text' name = 'image' class="textbox"> </div>
+            <div> Paragraph <input type = 'text' name = 'paragraph' class="textbox"> </div>
+          </div>
+
           <div id="buttons">
-            <div class="button">Create</div>
+            <div class="button" id="createbutton"><input class="button" type="submit" value="Create" id="buttonbutton"></div>
+            <input type="hidden" name="category_id" value="{{category_id}}">
             <div class="button" id="exit">x</div>
           </div>
-        </div>
-      </div>
-    </form>
 
-<!--
-REST OF PAGE
--->
-<div id="restofpage">
-    <h1> [category name] </h1>
-    <div class="Box">Person</div>
- </div>
+        </div>
+    </form>
+  </div>
+
+
+
+  <div class="restofpage" id="tilecontainer">
+    <ul>
+      {% for person in people %}
+        {% if person.category_id == category_id %}
+        <li class="tile">
+          <div class="personName">{{person.name_person}}</div>
+          <img src="{{person.image}}" class="personurl"></img>
+          <div class="personParagraph">{{person.paragraph}}</div>
+        </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
 
 </body>
 </html>

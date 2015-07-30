@@ -6,28 +6,50 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
   <script src="../javascript/script.js"></script>
+  <!-- <link href='http://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'> -->
+  <link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
   <div class="topbar">
-    <div id="gohome">Faces</div>
+
+    <div id="gohome" class="navitem"><a href="/home">Faces<br/></a></div>
+    <div id="logout" class="navitem"><a>Log Out</a></div>
+    <!-- <div id="tutorial" class="navitem"><a href="../templates/html">Tutorial</a></div> -->
+
   </div>
-    <ul>
-      <li id="addCategory"><a>Add Category</a></li>
-      <li id="tutorial"><a href="../templates/html">Tutorial</a></li>
-    </ul>
+
+    <div id="addCategory" class="add">Add Category </div>
+
     <div id="categoryForm">
-        <form action="/" method='GET'>
+        <form action="/add_category" method='POST'>
           <div>
-            <h1>Name your category</h1>
-            <input type="text" name="categoryName" class="textbox">
+            <h2>Name your category</h2>
+            <input type="text" name="category_Name" class="textbox">
+
               <div id="buttons">
-                <div class="button">Create</div>
+                <div class="button" id="createbutton"><input class = "button" type = "submit" value = "create" id="buttonbutton"></div>
                 <div class="button" id="exit">x</div>
               </div>
           </div>
         </form>
     </div>
+
+<div class="restofpage">
+
+  <ul>
+    {% for category in categories %}
+      {% if category.user_id == user_id %}
+
+          <a href= "/add_person?category_id={{category.key.id()}}">
+            <li class="listedCategories">{{category.category_Name}} </li>
+          </a>
+
+      {% endif %}
+    {% endfor %}
+  </ul>
+
+</div>
 </body>
 
 </html>
