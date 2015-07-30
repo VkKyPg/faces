@@ -16,12 +16,4 @@ $(document).ready(function() {
     $('.restofpage').css({"opacity": '0.2'});
   })
 
-  $("#createbutton").mouseenter(function() {
-    $("#buttonbutton").css({"background-color": "#00C5CD"});
-  })
-
-  $("#createbutton").mouseleave(function() {
-    $("#buttonbutton").css({"background-color": "#333333"});
-  })
-
 });

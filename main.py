@@ -26,7 +26,7 @@ class LoginHandler(webapp2.RequestHandler):
             name_id = user.user_id()
             user = User(name_id = name_id)
             user.put()
-            self.redirect('/home')
+            self.redirect('/about')
         else:
             self.redirect(users.create_login_url(self.request.uri))
 
@@ -48,7 +48,7 @@ class AddCategoryHandler(webapp2.RequestHandler):
         user_id = users.get_current_user().user_id()
         category = Category(category_Name = category_Name, user_id = user_id)
         category.put()
-        self.redirect('/')
+        self.redirect('/home')
 
 class AddPersonHandler(webapp2.RequestHandler):
     def get(self):
@@ -81,6 +81,12 @@ class DeletePersonHandler(webapp2.RequestHandler):
         k.delete()
         self.redirect('/add_person')
 
+
+class TutorialHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja2_environment.get_template('templates/tutorial.html')
+        self.response.write(template.render())
+
 jinja2_environment = jinja2.Environment(loader=
     jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
@@ -91,4 +97,5 @@ app = webapp2.WSGIApplication([
     ('/add_person', AddPersonHandler),
     ('/delete_category', DeleteCategoryHandler),
     ('/delete_person', DeletePersonHandler),
+    ('/about', TutorialHandler),
 ], debug=True)

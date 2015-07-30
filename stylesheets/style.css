@@ -12,17 +12,14 @@ ul {
   vertical-align: center;
   text-align: center;
   overflow: hidden;
-<<<<<<< HEAD
-=======
   top:0px;
->>>>>>> dacf7fb75ad582fcf689791748b19fd70e2f3ed0
 }
 
 
 #gohome {
    float: left;
    font-size: 2em;
-   font-family: 'Poiret One', cursive;
+   font-family: 'Poiret One';
    padding-top: 20px;
    padding-right: 30px;
 }
@@ -54,7 +51,8 @@ ul {
   cursor: pointer;
   border-radius: 20px;
   margin-top: 120px;
-  position: relative;
+  /*position: relative;*/
+  position: fixed;
   right: 30px;
   padding: 20px;
   height: 40px;
@@ -112,6 +110,7 @@ body {
   padding: 20px;
   border: none;
   margin-left: 10px;
+  font-size: 0.8em;
 }
 
 .button:hover {
@@ -190,6 +189,10 @@ li, tile {
     .restofpage {
         margin-top: 220px;
     }
+
+    .add {
+      position: relative;
+    }
 }
 
 @media only screen and (max-width: 700px) {
@@ -204,10 +207,9 @@ li, tile {
         width: 90%;
         margin: auto;
       }
+
 }
 
-<<<<<<< HEAD
-=======
 /*#idname {
   margin-top: 150px;
   position: fixed;
@@ -217,7 +219,6 @@ li, tile {
   margin-left: 45vh;
 }*/
 
->>>>>>> dacf7fb75ad582fcf689791748b19fd70e2f3ed0
 
 .personName {
   font-size: 1.5em;
@@ -237,6 +238,27 @@ li, tile {
   margin-top: 10px;
 }
 
+
+#howtoplay {
+  margin: auto;
+  margin-top: 120px;
+  width: 50%;
+}
+
+#aboutwall {
+  bottom: 700px;
+  margin-bottom: 50px;
+}
+
+#aboutus h1 {
+  color: white;
+  margin: auto;
+}
+
+#aboutwall img {
+  align-self: center;
+}
+
 #aboutus {
   display: inline-flex;
   display: -webkit-flex;
@@ -247,17 +269,22 @@ li, tile {
   background-color: #333333;
   width: 100%;
   bottom: 0;
-  margin-top: 100px;
+  margin-top: 0;
 }
 
 .makers {
   display: inline-block;
   padding: 35px;
-  border: 1px solid black;
   margin: 20px;
   background-color: white;
   border-radius: 20px;
+  max-width: 500px;
 }
 
-#howtoplay {
+#aboutthecreators {
+  background-color: #333333;
+  color: white;
+  padding-top: 15px;
+  height: 65px;
+  font-size: 1.3em;
 }

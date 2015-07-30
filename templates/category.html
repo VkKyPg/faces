@@ -5,13 +5,13 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
   <script src="../javascript/script.js"></script>
-  <link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
   <div class="topbar">
-    <a href="/home"><div id="gohome" class="navitem">Faces</div></a>  
-    <div id="logout" class="navitem"><a href = "{{user_logout}}"> Log Out  </a></div>
+    <a href="/home"><div id="gohome" class="navitem">Faces</div></a>
+    <a href = "{{user_logout}}"><div id="logout" class="navitem"> Log Out  </div></a>
 
     <a href="/about"><div id="tutorial" class="navitem">About</div></a>
   </div>
@@ -24,13 +24,13 @@
 
             <div> Name <input type = 'text' name = 'name_person' class="textbox"> </div>
             <div> Image URL <input type = 'text' name = 'image' class="textbox"> </div>
-            <div> Paragraph <input type = 'text' name = 'paragraph' class="textbox"> </div>
+            <div> Optional Info <input type = 'text' name = 'paragraph' class="textbox"> </div>
 
           </div>
 
 
           <div id="buttons">
-            <div class="button" id="createbutton"><input class="button" type="submit" value="Create" id="buttonbutton"></div>
+            <input class="button" type="submit" value="Create" id="buttonbutton">
             <input type="hidden" name="category_id" value="{{category_id}}">
             <div class="button" id="exit">x</div>
           </div>
