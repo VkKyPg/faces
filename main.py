@@ -1,111 +1,96 @@
-#!/usr/bin/env python
-#
-# Copyright 2007 Google Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-
 from google.appengine.ext import ndb
 from google.appengine.api import users
 import webapp2
 import jinja2
 import os
-import json
+import logging
 
 class Person(ndb.Model):
     name_person = ndb.StringProperty(required= True)
     image = ndb.BlobProperty(required = False)
     paragraph = ndb.StringProperty(required = False)
+    category_id = ndb.StringProperty(required = False)
 
 class Category(ndb.Model):
     category_Name = ndb.StringProperty(required=True)
-    people = ndb.StructuredProperty(Person, repeated = True)
+    people = ndb.StructuredProperty(Person, repeated = True, required = False)
+    user_id = ndb.StringProperty(required = True)
 
 class User(ndb.Model):
-    name = ndb.StringProperty(required=True)
-    # categories = ndb.LocalStructuredProperty(Category, repeated = True)
-
+    name_id = ndb.StringProperty(required=True)
 
 class LoginHandler(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
         if user:
-            template= jinja2_environment.get_template("/templates/user.html")
-            self.response.write(template.render())
+            name_id = user.user_id()
+            user = User(name_id = name_id)
+            user.put()
+            self.redirect('/home')
         else:
-            greeting = ('<a href= "%s"> Sign in or register</a>.' %
-                users.create_login_url('/'))
-        self.response.write('<html><body>%s</body></html>'%greeting)
-
-class AddUserHandler(webapp2.RequestHandler):
-    def post(self):
-        name= self.request.get('name')
-        user = User(name=name)
-        user.put()
-        template = jinja2_environment.get_template("templates/index.html")
-        self.response.write(template.render())
+            self.redirect(users.create_login_url(self.request.uri))
 
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        template = jinja2_environment.get_template("templates/index.html")
-        self.response.write(template.render())
-
-class CreateCategoryHandler(webapp2.RequestHandler):
-    def get(self):
-        template = jinja2_environment.get_template('templates/category.html')
-        self.response.write(template.render())
+        user = users.get_current_user()
+        user_logout = users.create_logout_url ('/')
+        user_id = users.get_current_user().user_id()
+        category_data = Category.query().fetch()
+        category_keys =[]
+        for category in category_data:
+            category_keys.append(category.key.id())
+        template_vars = {'user_id': user_id, 'categories': category_data,
+                        'category_keys': category_keys, 'user_logout' : user_logout }
+        template = jinja2_environment.get_template('templates/index.html')
+        self.response.write(template.render(template_vars))
 
 class AddCategoryHandler(webapp2.RequestHandler):
     def post(self):
         category_Name = self.request.get('category_Name')
-        category = Category(category_Name = category_Name)
+        user_id = users.get_current_user().user_id()
+        category = Category(category_Name = category_Name, user_id = user_id)
         category.put()
-        template_vars = {'category': category}
-        template = jinja2_environment.get_template('templates/category.html')
-        self.response.write(template.render(template_vars))
-
-class CreatePersonHandler(webapp2.RequestHandler):
-    def get(self):
-        template = jinja2_environment.get_template('/templates/category.html')
-        self.response.write(template.render())
+        self.redirect('/')
 
 class AddPersonHandler(webapp2.RequestHandler):
+    def get(self):
+        category_id = self.request.get('category_id')
+        person_data = Person.query().fetch()
+        template_vars = {'category_id': category_id, 'people': person_data}
+        template = jinja2_environment.get_template('templates/category.html')
+        self.response.write(template.render(template_vars))
     def post(self):
         name_person = self.request.get('name_person')
         image = str(self.request.get('image'))
         paragraph = self.request.get('paragraph')
-        person = Person(name_person= name_person, image = image, paragraph = paragraph)
+        category_id = self.request.get('category_id')
+        person = Person(name_person = name_person, image = image, paragraph = paragraph, category_id = category_id )
         person.put()
-        template_vars = {'person': person}
-        template = jinja2_environment.get_template('templates/category.html')
-        self.response.write(template.render(template_vars))
-        self.response.write(person.name_person + ' was created')
-        self.response.write('<a href = /create_person> Create another Person </a>')
-        self.response.write('<a href = /> Back to Homepage </a>')
-        self.response.write('<a href = /category> Back to Category </a>')
+        self.redirect('/add_person?category_id=' + category_id)
 
-class AddUserHandler(webapp2.RequestHandler):
+class DeleteCategoryHandler(webapp2.RequestHandler):
     def post(self):
-        name= self.request.get('name')
-        user= User(name=name)
-        user.put()
+        id_category = self.request.get('keyid')
+        k = ndb.Key(Category, int(id_category))
+        k.delete()
+        self.redirect('/home')
+
+class DeletePersonHandler(webapp2.RequestHandler):
+    def post(self):
+        id_people = self.request.get('ppl_id')
+        k = ndb.Key(Person, int(id_people))
+        k.delete()
+        self.redirect('/add_person')
 
 jinja2_environment = jinja2.Environment(loader=
     jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
 app = webapp2.WSGIApplication([
-    ('/home', MainHandler),
-    ('/category', CreateCategoryHandler),
     ('/', LoginHandler),
+    ('/home', MainHandler),
+    ('/add_category', AddCategoryHandler),
+    ('/add_person', AddPersonHandler),
+    ('/delete_category', DeleteCategoryHandler),
+    ('/delete_person', DeletePersonHandler),
 ], debug=True)
