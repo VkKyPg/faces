@@ -12,7 +12,10 @@ ul {
   vertical-align: center;
   text-align: center;
   overflow: hidden;
+<<<<<<< HEAD
+=======
   top:0px;
+>>>>>>> dacf7fb75ad582fcf689791748b19fd70e2f3ed0
 }
 
 
@@ -203,6 +206,8 @@ li, tile {
       }
 }
 
+<<<<<<< HEAD
+=======
 /*#idname {
   margin-top: 150px;
   position: fixed;
@@ -212,6 +217,7 @@ li, tile {
   margin-left: 45vh;
 }*/
 
+>>>>>>> dacf7fb75ad582fcf689791748b19fd70e2f3ed0
 
 .personName {
   font-size: 1.5em;

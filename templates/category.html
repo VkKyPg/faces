@@ -10,8 +10,9 @@
 
 <body>
   <div class="topbar">
-    <a href="/home"><div id="gohome" class="navitem">Faces</div></a>
-    <a><div id="logout" class="navitem">Log Out</div></a>
+    <a href="/home"><div id="gohome" class="navitem">Faces</div></a>  
+    <div id="logout" class="navitem"><a href = "{{user_logout}}"> Log Out  </a></div>
+
     <a href="/about"><div id="tutorial" class="navitem">About</div></a>
   </div>
 
@@ -27,6 +28,7 @@
 
           </div>
 
+
           <div id="buttons">
             <div class="button" id="createbutton"><input class="button" type="submit" value="Create" id="buttonbutton"></div>
             <input type="hidden" name="category_id" value="{{category_id}}">
@@ -39,6 +41,7 @@
 
 
 
+
   <div class="restofpage" id="tilecontainer">
     <ul>
       {% for person in people %}
@@ -48,6 +51,8 @@
           <img src="{{person.image}}" class="personurl"></img>
           <div class="personParagraph">{{person.paragraph}}</div>
 
+
+
           <form action = "/delete_person" method = "POST">
             <input type="hidden" name= 'ppl_id' value = "{{person.key.id()}}">
             <input type="submit" value="Delete" class="deletebutton">
@@ -56,6 +61,7 @@
         {% endif %}
       {% endfor %}
     </ul>
+
   </div>
 
 </body>

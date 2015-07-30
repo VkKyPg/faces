@@ -33,11 +33,12 @@ class LoginHandler(webapp2.RequestHandler):
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         user_id = users.get_current_user().user_id()
+        user_logout= users.create_logout_url ('/')
         category_data = Category.query().fetch()
         category_keys =[]
         for category in category_data:
             category_keys.append(category.key.id())
-        template_vars = {'user_id': user_id, 'categories': category_data, "category_keys": category_keys}
+        template_vars = {'user_id': user_id, 'categories': category_data, "category_keys": category_keys, "user_logout" : user_logout}
         template = jinja2_environment.get_template('templates/index.html')
         self.response.write(template.render(template_vars))
 
@@ -52,8 +53,9 @@ class AddCategoryHandler(webapp2.RequestHandler):
 class AddPersonHandler(webapp2.RequestHandler):
     def get(self):
         category_id = self.request.get('category_id')
+        user_logout= users.create_logout_url ('/')
         person_data = Person.query().fetch()
-        template_vars = {'category_id': category_id, 'people': person_data}
+        template_vars = {'category_id': category_id, 'people': person_data, 'user_logout' : user_logout}
         template = jinja2_environment.get_template('templates/category.html')
         self.response.write(template.render(template_vars))
     def post(self):
@@ -79,11 +81,6 @@ class DeletePersonHandler(webapp2.RequestHandler):
         k.delete()
         self.redirect('/add_person')
 
-class TutorialHandler(webapp2.RequestHandler):
-    def get(self):
-        template = jinja2_environment.get_template('templates/tutorial.html')
-        self.response.write(template.render())
-
 jinja2_environment = jinja2.Environment(loader=
     jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
@@ -94,5 +91,4 @@ app = webapp2.WSGIApplication([
     ('/add_person', AddPersonHandler),
     ('/delete_category', DeleteCategoryHandler),
     ('/delete_person', DeletePersonHandler),
-    ('/about', TutorialHandler)
 ], debug=True)
